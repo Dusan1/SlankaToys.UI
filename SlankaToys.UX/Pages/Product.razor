@@ -1,0 +1,42 @@
+﻿@inject HttpClient Http
+@using System;
+@using System.Globalization;
+
+@page "/product/{productid:int}"
+@if(productModel == null){
+    <p><em>Loading...</em></p>
+}
+else{
+    <h3>@productModel.Name</h3>
+    <div class="top">
+        <img class="image" src="/images/@productModel.ImageFileName" alt="Image">
+
+        <h5>@productModel.Description</h5>
+        <h5>@productModel.PriceForDisplay</h5>
+        <p><a class="btn btn-success" role="button">Add To Cart</a></p>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int ProductId { get; set; }
+
+       private ProductModel productModel;
+
+    protected override async Task OnInitializedAsync()
+    {
+        productModel = await Http.GetFromJsonAsync<ProductModel>($"product?id={@ProductId}");
+    }
+
+    public class ProductModel
+    {
+        public int ProductId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string ImageFileName { get; set; }
+        public decimal Price { get; set; }
+
+        public string PriceForDisplay => Price.ToString("C2", CultureInfo.CreateSpecificCulture("en-US"));
+        //public string ProductType { get; set; }
+    }
+}

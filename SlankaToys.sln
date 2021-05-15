@@ -1,0 +1,27 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.808.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlankaToys.UX", "SlankaToys.UX\SlankaToys.UX.csproj", "{504E9397-E170-4B1D-AAF0-2F77E7DF951C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{504E9397-E170-4B1D-AAF0-2F77E7DF951C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{504E9397-E170-4B1D-AAF0-2F77E7DF951C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{504E9397-E170-4B1D-AAF0-2F77E7DF951C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{504E9397-E170-4B1D-AAF0-2F77E7DF951C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4677BFB9-A0FC-4F50-90DE-3D19F3AA17D6}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+EndGlobal

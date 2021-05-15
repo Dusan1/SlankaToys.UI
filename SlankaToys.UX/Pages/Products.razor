@@ -1,0 +1,67 @@
+﻿@page "/products"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+@inject IWebAssemblyHostEnvironment HostEnvironment
+
+<h3>Products</h3>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{ 
+    <div class="container">
+        <div class="row">
+            <p>deploy test</p>
+            @foreach (var product in products)
+            {
+                <div class="col-md-3 text-center col-sm-6 col-xs-6 tile">
+                    <div class="product-box">
+                   
+                        <img class="image-set" src="/images/@product.ImageFileName"  alt="Image">
+                   
+                        <div class="caption">
+                            <h3><a>@product.Name</a></h3>
+                            <p>Price : <strong>$ @product.Price</strong>  </p>
+                           
+                            <p><a class="btn btn-success" role="button">Add To Cart</a> <a @onclick= "@(() => GetProduct(@product.ProductId))" class="btn btn-primary" role="button">See Details</a></p>
+                        </div>
+                    </div>
+                </div>
+                
+       }
+        </div>
+        </div>
+
+}
+
+@code
+{
+    private Product[] products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await Http.GetFromJsonAsync<Product[]>("products");
+    }
+
+    void GetProduct(int productId) => NavigationManager.NavigateTo($"product/{productId}");
+
+    @*private void GetProduct(int productId)
+        {
+            //var product = new Product() { ProductId = 1, Name = "test" };
+            NavigationManager.NavigateTo($"product/{productId}");
+        }*@
+
+    public class Product
+    {
+        public int ProductId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string ImageFileName { get; set; }
+        public decimal Price { get; set; }
+        //public string ProductType { get; set; }
+    }
+}
+
