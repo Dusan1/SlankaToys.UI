@@ -97,7 +97,7 @@ stages:
         ArtifactName: 'STAPI'
         publishLocation: 'Container'
 
-- stage: Deploy
+# - stage: Deploy
   jobs:
   - job: Deploy
     pool:
