@@ -25,7 +25,10 @@ else
                             <h3><a>@product.Name</a></h3>
                             <p>Price : <strong>$ @product.Price</strong>  </p>
                            
-                            <p><a class="btn btn-success" role="button">Add To Cart</a> <a @onclick= "@(() => GetProduct(@product.ProductId))" class="btn btn-primary" role="button">See Details</a></p>
+                            <p>
+                            <a @onclick= "@(() => AddToCart(@product.ProductId))" class="btn btn-success" role="button">Add To Cart</a>
+                            <a @onclick= "@(() => GetProduct(@product.ProductId))" class="btn btn-primary" role="button">See Details</a>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -47,20 +50,40 @@ else
 
     void GetProduct(int productId) => NavigationManager.NavigateTo($"product/{productId}");
 
+   // private async Task<HttpResponseMessage> AddToCart(int productId) => await Http.PostAsJsonAsync("cart", productId);
+
+    async Task AddToCart(int productId)
+    {
+        var request = new AddToCartRequestModel() { ProductId = productId, Quantity = 1, UserId = 1 };
+        var response = await Http.PostAsJsonAsync("cart", request);
+    }
+
     @*private void GetProduct(int productId)
         {
             //var product = new Product() { ProductId = 1, Name = "test" };
             NavigationManager.NavigateTo($"product/{productId}");
         }*@
 
-    public class Product
+public class Product
+{
+    public int ProductId { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string ImageFileName { get; set; }
+    public decimal Price { get; set; }
+    //public string ProductType { get; set; }
+}
+
+public class AddToCartRequestModel
+{
+    public AddToCartRequestModel()
     {
-        public int ProductId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string ImageFileName { get; set; }
-        public decimal Price { get; set; }
-        //public string ProductType { get; set; }
+
     }
+    public int UserId { get; set; }
+    public int ProductId { get; set; }
+    public int Quantity { get; set; }
+}
+
 }
 
