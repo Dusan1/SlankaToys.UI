@@ -2,7 +2,9 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+@using SlankaToys.UX.Services
 @inject IWebAssemblyHostEnvironment HostEnvironment
+@inject ToastService toastService
 
 <h3>Products</h3>
 
@@ -50,40 +52,42 @@ else
 
     void GetProduct(int productId) => NavigationManager.NavigateTo($"product/{productId}");
 
-   // private async Task<HttpResponseMessage> AddToCart(int productId) => await Http.PostAsJsonAsync("cart", productId);
-
-    async Task AddToCart(int productId)
+    public async Task AddToCart(int productId)
     {
         var request = new AddToCartRequestModel() { ProductId = productId, Quantity = 1, UserId = 1 };
         var response = await Http.PostAsJsonAsync("cart", request);
-    }
-
-    @*private void GetProduct(int productId)
+        try
         {
-            //var product = new Product() { ProductId = 1, Name = "test" };
-            NavigationManager.NavigateTo($"product/{productId}");
-        }*@
-
-public class Product
-{
-    public int ProductId { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public string ImageFileName { get; set; }
-    public decimal Price { get; set; }
-    //public string ProductType { get; set; }
-}
-
-public class AddToCartRequestModel
-{
-    public AddToCartRequestModel()
-    {
+            string d = await response.Content.ReadAsStringAsync();
+            toastService.ShowToast(d, ToastType.Success);
+        }
+        catch (Exception ex)
+        {
+            var g = ex;
+        }
 
     }
-    public int UserId { get; set; }
-    public int ProductId { get; set; }
-    public int Quantity { get; set; }
-}
+
+    public class Product
+    {
+        public int ProductId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string ImageFileName { get; set; }
+        public decimal Price { get; set; }
+        //public string ProductType { get; set; }
+    }
+
+    public class AddToCartRequestModel
+    {
+        public AddToCartRequestModel()
+        {
+
+        }
+        public int UserId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
 
 }
 

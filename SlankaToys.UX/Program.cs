@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SlankaToys.UX.Services;
 
 namespace SlankaToys.UX
 {
@@ -18,10 +19,8 @@ namespace SlankaToys.UX
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("BaseAddress")) });
-         
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://slankatoys.azurewebsites.net") });
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
+
+            builder.Services.AddScoped<ToastService>();
 
             await builder.Build().RunAsync();
         
