@@ -5,11 +5,11 @@ html, body {
 }
 
 a, .btn-link {
-    color: #0366d6;
+    /*color: #0366d6;*/
 }
 
 .btn-primary {
-    color: #fff;
+   /*color: #fff;*/
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
@@ -83,7 +83,7 @@ footer {
     text-align: center;
     padding: 3px;
     background-color: DarkSalmon;
-    color: white;
+    /*color: white;*/
     position: absolute;
     bottom: 0;
     left: 0;
@@ -93,6 +93,6 @@ footer {
 .btn.sharp {
     border-radius: 0;
     background: darkblue;
-    color: white;
+    color: #ffffff !important;
 }
     
