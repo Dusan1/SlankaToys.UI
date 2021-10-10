@@ -1,19 +1,28 @@
-﻿@inject HttpClient Http
-@using System;
-@using System.Globalization;
+﻿@using System
+@using System.Globalization
+@using SlankaToys.UX.Models.Requests
+@using SlankaToys.UX.Services
+@inject HttpClient Http
+@inject ToastService toastService
 
 @page "/product/{productid:int}"
-@if(productModel == null){
+@if (productModel == null)
+{
     <p><em>Loading...</em></p>
 }
-else{
+else
+{
     <h3>@productModel.Name</h3>
     <div class="top">
         <img class="image" src="/images/@productModel.ImageFileName" alt="Image">
 
         <h5>@productModel.Description</h5>
         <h5>@productModel.PriceForDisplay</h5>
-        <p><a class="btn btn-success" role="button">Add To Cart</a></p>
+        <p>
+            @*   <a class="btn btn-success" role="button">Add To Cart</a>*@
+            <a @onclick="@(() => AddToCart(productModel.ProductId))" class="btn sharp" role="button">Add To Cart</a>
+        </p>
+
     </div>
 }
 
@@ -21,11 +30,27 @@ else{
     [Parameter]
     public int ProductId { get; set; }
 
-       private ProductModel productModel;
+    private ProductModel productModel;
 
     protected override async Task OnInitializedAsync()
     {
         productModel = await Http.GetFromJsonAsync<ProductModel>($"product?id={@ProductId}");
+    }
+
+    public async Task AddToCart(int productId)
+    {
+        var request = new AddToCartRequestModel() { ProductId = productId, Quantity = 1, UserId = 1 };
+        var response = await Http.PostAsJsonAsync("cart", request);
+        try
+        {
+            string d = await response.Content.ReadAsStringAsync();
+            toastService.ShowToast(d, ToastType.Success);
+        }
+        catch (Exception ex)
+        {
+            var g = ex;
+        }
+
     }
 
     public class ProductModel

@@ -89,4 +89,10 @@ footer {
     left: 0;
     width: 100%;
 }
+
+.btn.sharp {
+    border-radius: 0;
+    background: darkblue;
+    color: white;
+}
     
