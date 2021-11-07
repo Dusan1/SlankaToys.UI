@@ -1,0 +1,45 @@
+@using System
+@using SlankaToys.UX.Services
+@inject HttpClient Http
+@inject ToastService toastService
+
+@page "/cart/user/{userId:int}"
+@if (cartModel == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h3>@cartModel.Date</h3>
+    @foreach (var item in cartModel.Items)
+    {
+        <p>@item.ProductName (@item.Quantity)</p>
+        <p>Price: @item.Price</p>
+    }
+}
+
+@code {
+    [Parameter]
+    public int UserId { get; set; }
+
+    private CartModel cartModel;
+
+    protected override async Task OnInitializedAsync()
+    {
+        cartModel = await Http.GetFromJsonAsync<CartModel>($"cart/user/{UserId}");
+    }
+
+
+    public class CartItemModel
+    {
+        public string ProductName { get; set; }
+        public decimal Price { get; set; }
+
+        public decimal Quantity { get; set; }
+    }
+
+    public class CartModel{
+        public DateTime Date { get; set; }
+        public List<CartItemModel> Items { get; set; }
+    }
+}
