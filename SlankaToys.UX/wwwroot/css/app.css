@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin-bottom:20px;
 }
 
 a, .btn-link {
@@ -80,14 +81,23 @@ a, .btn-link {
     }
 
 footer {
-    text-align: center;
-    padding: 3px;
+    /* text-align: center;
     background-color: DarkSalmon;
-    /*color: white;*/
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    color: white;
+    position: relative;
     width: 100%;
+    clear: both;
+    height: 30px;
+    margin-top: -30px; */
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    margin-top: 10px;
+    width: 100%;
+    background-color: DarkSalmon;
+    color: white;
+    text-align: center;
 }
 
 .btn.sharp {
@@ -96,3 +106,7 @@ footer {
     color: #ffffff !important;
 }
     
+.product-box img {
+    height: 130px !important;
+    width: 130px !important;
+}

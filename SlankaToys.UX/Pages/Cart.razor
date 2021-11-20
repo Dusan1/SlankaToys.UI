@@ -11,11 +11,41 @@
 else
 {
     <h3>@cartModel.Date</h3>
-    @foreach (var item in cartModel.Items)
+    @* @foreach (var item in cartModel.Items)
     {
-        <p>@item.ProductName (@item.Quantity)</p>
-        <p>Price: @item.Price</p>
-    }
+         <p>@item.ProductName (@item.Quantity)</p>
+        <p>Price: @item.Price</p> 
+
+           <div class="product-box">
+
+            <img src="/images/@item.ImageFileName" alt="Image">
+
+            <div class="caption">
+                <h3><a>@item.ProductName </a></h3>
+                <p>Price : <strong>$ @item.Price</strong>  </p>
+            </div>
+        </div>
+    } *@
+
+        <div class="container">
+        <div class="row">
+            @foreach (var item in cartModel.Items)
+            {
+                <div class="col-md-3 text-center col-sm-6 col-xs-6 tile">
+                    <div class="product-box">
+
+                        <img src="/images/@item.ImageFileName" alt="Image">
+
+                        <div class="caption">
+                            <h3><a>@item.ProductName (@item.Quantity)</a></h3>
+                            <p>Price : <strong>$ @item.Price</strong>  </p>
+                            <p>Total Price : <strong>$ @item.TotalPrice </strong>  </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 }
 
 @code {
@@ -36,6 +66,10 @@ else
         public decimal Price { get; set; }
 
         public decimal Quantity { get; set; }
+
+        public decimal TotalPrice => Price * Quantity;
+
+        public string ImageFileName { get; set; }
     }
 
     public class CartModel{
