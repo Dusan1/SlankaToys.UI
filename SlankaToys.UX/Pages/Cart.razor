@@ -11,6 +11,7 @@
 else
 {
     <h3>@cartModel.Date</h3>
+    <h3>Total: <strong>$ @cartModel.Items.Sum(i => i.TotalPrice)</strong></h3>
     @* @foreach (var item in cartModel.Items)
     {
          <p>@item.ProductName (@item.Quantity)</p>
