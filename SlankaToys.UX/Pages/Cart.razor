@@ -12,41 +12,33 @@ else
 {
     <h3>@cartModel.Date</h3>
     <h3>Total: <strong>$ @cartModel.Items.Sum(i => i.TotalPrice)</strong></h3>
-    @* @foreach (var item in cartModel.Items)
-    {
-         <p>@item.ProductName (@item.Quantity)</p>
-        <p>Price: @item.Price</p> 
-
-           <div class="product-box">
-
-            <img src="/images/@item.ImageFileName" alt="Image">
-
-            <div class="caption">
-                <h3><a>@item.ProductName </a></h3>
-                <p>Price : <strong>$ @item.Price</strong>  </p>
-            </div>
-        </div>
-    } *@
 
         <div class="container">
-        <div class="row">
-            @foreach (var item in cartModel.Items)
-            {
-                <div class="col-md-3 text-center col-sm-6 col-xs-6 tile">
-                    <div class="product-box">
-
-                        <img src="/images/@item.ImageFileName" alt="Image">
-
-                        <div class="caption">
-                            <h3><a>@item.ProductName (@item.Quantity)</a></h3>
-                            <p>Price : <strong>$ @item.Price</strong>  </p>
-                            <p>Total Price : <strong>$ @item.TotalPrice </strong>  </p>
+        @foreach (var item in cartModel.Items)
+        {
+            <div class="row">
+            <div class=col-md-12>
+                <div class=col-md-3>
+                        <div class="product-box">
+                            <img src="/images/@item.ImageFileName" alt="Image">
                         </div>
-                    </div>
                 </div>
-            }
+                <div class=col-md-3>
+                        <h3><a>@item.ProductName (@item.Quantity)</a></h3>
+                </div>
+                <div class=col-md-3>
+                        <h3><a>(@item.Quantity)</a></h3>
+                </div>
+                <div class=col-md-3>
+                        <p>Price : <strong>$ @item.Price</strong>  </p>
+                        <p>Total Price : <strong>$ @item.TotalPrice </strong>  </p>
+                </div>
+                    
+            </div>
+            </div>
+        }
+
         </div>
-    </div>
 }
 
 @code {
