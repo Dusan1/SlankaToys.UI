@@ -1,5 +1,6 @@
 @using System
 @using SlankaToys.UX.Services
+@using SlankaToys.UX.Models.Requests
 @inject HttpClient Http
 @inject ToastService toastService
 
@@ -40,11 +41,12 @@ else
 							</td>
 							<td data-th="Price">$@item.Price</td>
 							<td data-th="Quantity">
-								<input type="number" class="form-control text-center" value="@item.Quantity">
+								<input type="number" class="form-control text-center" @oninput="(e)=> item.QuantityForView = e.Value.ToString()" value="@item.Quantity">
 							</td>
 							<td data-th="Subtotal" class="text-center">@item.TotalPrice</td>
 							<td class="actions" data-th="">
-								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+								<button @onclick="@(() => UpdateCart(item.ProductId, cartModel.CartId, item.QuantityForView))" class="btn btn-info btn-sm"><i class="fa fa-refresh">
+									   </i></button>
 								<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
 							</td>
 						</tr>
@@ -81,17 +83,36 @@ else
     public class CartItemModel
     {
         public string ProductName { get; set; }
+        public string QuantityForView { get; set; }
         public decimal Price { get; set; }
 
-        public decimal Quantity { get; set; }
+        public int Quantity { get; set; }
 
         public decimal TotalPrice => Price * Quantity;
 
         public string ImageFileName { get; set; }
+        public int ProductId { get; set; }
     }
 
     public class CartModel{
         public DateTime Date { get; set; }
+        public int CartId { get; set; }
         public List<CartItemModel> Items { get; set; }
+    }
+
+    public async Task UpdateCart(int productId, int cartId, string quantity)
+    {
+        var request = new UpdateCartRequestModel() { ProductId = productId, Quantity = int.Parse(quantity), CartId = cartId };
+        var response = await Http.PutAsJsonAsync("cart", request);
+        try
+        {
+            string d = await response.Content.ReadAsStringAsync();
+            toastService.ShowToast(d, ToastType.Success);
+        }
+        catch (Exception ex)
+        {
+            var g = ex;
+        }
+
     }
 }
