@@ -47,7 +47,7 @@ else
 							<td class="actions" data-th="">
 								<button @onclick="@(() => UpdateCart(item.ProductId, cartModel.CartId, item.QuantityForView))" class="btn btn-info btn-sm"><i class="fa fa-refresh">
 									   </i></button>
-								<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
+								<button @onclick="@(() => DeleteCartItem(item.ProductId, cartModel.CartId))" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
 							</td>
 						</tr>
                         }
@@ -103,6 +103,22 @@ else
     public async Task UpdateCart(int productId, int cartId, string quantity)
     {
         var request = new UpdateCartRequestModel() { ProductId = productId, Quantity = int.Parse(quantity), CartId = cartId };
+        var response = await Http.PutAsJsonAsync("cart", request);
+        try
+        {
+            string d = await response.Content.ReadAsStringAsync();
+            toastService.ShowToast(d, ToastType.Success);
+        }
+        catch (Exception ex)
+        {
+            var g = ex;
+        }
+
+    }
+
+    public async Task DeleteCartItem(int productId, int cartId)
+    {
+        var request = new UpdateCartRequestModel() { ProductId = productId, Quantity = 0, CartId = cartId };
         var response = await Http.PutAsJsonAsync("cart", request);
         try
         {
