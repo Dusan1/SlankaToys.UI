@@ -1,185 +1,246 @@
-﻿
+﻿@using System
+@using SlankaToys.UX.Services
+@using SlankaToys.UX.Models.Responses
+@inject HttpClient Http
+@inject ToastService toastService
+
 @page "/checkout/{userId:int}"
 
-<h3>Checkout page</h3>
-<div class="container">
-    <form class="form-horizontal checkout" role="form">
-        <div class="row">
-            <div class="col-md-6 bill">
-                <div class="title-bg">
-                    <div class="title">Billing Address</div>
+@if (cartModel == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h3>Checkout page</h3>
+    <div class="container">
+        <form class="form-horizontal" role="form">
+            <div class="row">
+                <div class="col-md-6 bill">
+                    <div class="title-bg">
+                        <div class="title">Billing Address</div>
+                    </div>
+                    <div class="form-group dob">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="name" placeholder="Name">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="last_name" placeholder="Last Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" id="company" placeholder="Company">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" id="address" placeholder="Address">
+                        </div>
+                    </div>
+                    <div class="form-group dob">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="city" placeholder="City">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="post_code" placeholder="Post Code">
+                        </div>
+                    </div>
+                    <div class="form-group dob">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="country" placeholder="Country">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="state" placeholder="States">
+                        </div>
+                    </div>
+                    <div class="form-group dob">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="email" placeholder="Email">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="phone" placeholder="Phone Number">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group dob">
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="name" placeholder="Name">
+                <div class="col-md-6 ship">
+                    <div class="title-bg">
+                        <div class="title">Shipping Address</div>
                     </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="last_name" placeholder="Last Name">
+                    <div class="form-group dob">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="name-2" placeholder="Name">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="last_name-2" placeholder="Last Name">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="text" class="form-control" id="company" placeholder="Company">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" id="company-2" placeholder="Company">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="text" class="form-control" id="address" placeholder="Address">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" id="address-2" placeholder="Address">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group dob">
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="city" placeholder="City">
+                    <div class="form-group dob">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="city-2" placeholder="City">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="post_code-2" placeholder="Post Code">
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="post_code" placeholder="Post Code">
+                    <div class="form-group dob">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="country-2" placeholder="Country">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="state-2" placeholder="States">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group dob">
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="country" placeholder="Country">
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="state" placeholder="States">
-                    </div>
-                </div>
-                <div class="form-group dob">
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="email" placeholder="Email">
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="phone" placeholder="Phone Number">
+                    <div class="form-group dob">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="email-2" placeholder="Email">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="phone-2" placeholder="Phone Number">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 ship">
-                <div class="title-bg">
-                    <div class="title">Shipping Address</div>
-                </div>
-                <div class="form-group dob">
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="name-2" placeholder="Name">
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="last_name-2" placeholder="Last Name">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="text" class="form-control" id="company-2" placeholder="Company">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="text" class="form-control" id="address-2" placeholder="Address">
-                    </div>
-                </div>
-                <div class="form-group dob">
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="city-2" placeholder="City">
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="post_code-2" placeholder="Post Code">
-                    </div>
-                </div>
-                <div class="form-group dob">
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="country-2" placeholder="Country">
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="state-2" placeholder="States">
-                    </div>
-                </div>
-                <div class="form-group dob">
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="email-2" placeholder="Email">
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="phone-2" placeholder="Phone Number">
-                    </div>
+            <div class="title-bg">
+                <div class="title">Order Comments</div>
+            </div>
+            <p>Notes about order, for example instructions for delivery.</p>
+            <div class="form-group ">
+                <div class="col-md-12">
+                    <textarea class="form-control"></textarea>
                 </div>
             </div>
-        </div>
-        <div class="title-bg">
-            <div class="title">Order Comments</div>
-        </div>
-        <p>Notes about order, for example instructions for delivery.</p>
-        <div class="form-group ">
-            <div class="col-md-12">
-                <textarea class="form-control"></textarea>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox">  I have read and agree to the Terms and conditions
+                </label>
             </div>
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox">  I have read and agree to the Terms and conditions
-            </label>
-        </div>
-        <div id="title-bg">
-            <div class="title">Payment Method</div>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" checked="">
-                Credit Card
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4">
-                Paypal
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios5" value="option5">
-                Direct Bank Transfer
-            </label>
-        </div>
-        <div class="title-bg">
-            <div class="title">Confirm Order</div>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-bordered chart">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Model</th>
-                        <th>Item No.</th>
-                        <th>Quantity</th>
-                        <th>Unit Price</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Dummy Product</td>
-                        <td>P-2</td>
-                        <td>222883</td>
-                        <td>1</td>
-                        <td>$34.00</td>
-                        <td>$34.00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="row">
-            <div class="col-md-3 col-§-offset-9">
-                <div class="subtotal-wrap">
-                    <div class="subtotal">
-                        <p>Sub Total : $26.00</p>
-                        <p>Vat 17% : $54.00</p>
+            <div id="title-bg">
+                <div class="title">Payment Method</div>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" checked="">
+                    Credit Card
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4">
+                    Paypal
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios5" value="option5">
+                    Direct Bank Transfer
+                </label>
+            </div>
+            <div class="title-bg">
+                <div class="title">Confirm Order</div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered chart">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+
+
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in cartModel.Items)
+                        {
+                            <tr>
+                                <td>@item.ProductName</td>
+
+                                <td>@item.Quantity</td>
+                                <td>@item.Price</td>
+                                <td>@item.TotalPrice</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-§-offset-9">
+                    <div class="subtotal-wrap">
+                        <div class="subtotal">
+                            <p>Sub Total : $@cartModel.SubTotal</p>
+                            <p>Vat 17% : $@cartModel.VAT</p>
+                        </div>
+                        <div class="total">Total : <span class="bigprice">$@cartModel.TotalItemsPrice</span></div>
+                        <button type="button" class="btn btn-primary btn-red btn-md" @onclick="SubmitCheckout">Order Now</button>
                     </div>
-                    <div class="total">Total : <span class="bigprice">$255.00</span></div>
-                    <button class="btn btn-default btn-red btn-md">Order Now</button>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+
+}
 
 @code {
     [Parameter]
     public int UserId { get; set; }
+
+    private CartModel cartModel;
+
+    protected override async Task OnInitializedAsync()
+    {
+        cartModel = await Http.GetFromJsonAsync<CartModel>($"cart/{UserId}");
+    }
+
+
+    @*public class CartItemModel
+        {
+            public string ProductName { get; set; }
+            public string QuantityForView { get; set; }
+            public decimal Price { get; set; }
+
+            public int Quantity { get; set; }
+
+            public decimal TotalPrice => Price * Quantity;
+
+            public string ImageFileName { get; set; }
+            public int ProductId { get; set; }
+        }
+
+        public class CartModel
+        {
+            public DateTime Date { get; set; }
+            public int CartId { get; set; }
+            public List<CartItemModel> Items { get; set; }
+
+            public decimal TotalItemsPrice => Items.Select(it => it.TotalPrice).Sum();
+            public decimal VAT => TotalItemsPrice * 0.17m;
+            public decimal SubTotal => TotalItemsPrice - VAT;
+        }*@
+
+    public void SubmitCheckout(MouseEventArgs args)
+    {
+        try
+        {
+            toastService.ShowToast("Whoaaaa!" + args.Detail, ToastType.Success);
+        }
+        catch (Exception ex)
+        {
+            var g = ex;
+        }
+
+    }
 }
 

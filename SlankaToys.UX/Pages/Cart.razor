@@ -1,6 +1,7 @@
 @using System
 @using SlankaToys.UX.Services
 @using SlankaToys.UX.Models.Requests
+@using SlankaToys.UX.Models.Responses
 @inject HttpClient Http
 @inject ToastService toastService
 
@@ -80,7 +81,7 @@ else
     }
 
 
-    public class CartItemModel
+    @*public class CartItemModel
     {
         public string ProductName { get; set; }
         public string QuantityForView { get; set; }
@@ -98,7 +99,7 @@ else
         public DateTime Date { get; set; }
         public int CartId { get; set; }
         public List<CartItemModel> Items { get; set; }
-    }
+    }*@
 
     public async Task UpdateCart(int productId, int cartId, string quantity)
     {

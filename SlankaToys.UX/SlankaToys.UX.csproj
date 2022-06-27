@@ -14,8 +14,10 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\" />
     <Folder Include="Services\" />
+    <Folder Include="Models\Responses\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Services\" />
+    <None Remove="Models\Responses\" />
   </ItemGroup>
 </Project>

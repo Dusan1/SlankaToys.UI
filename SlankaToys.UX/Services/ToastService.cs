@@ -38,7 +38,7 @@ namespace SlankaToys.UX.Services
         {
             if (Countdown == null)
             {
-                Countdown = new Timer(5000);
+                Countdown = new Timer(500);
                 Countdown.Elapsed += HideToast;
                 Countdown.AutoReset = false;
             }
